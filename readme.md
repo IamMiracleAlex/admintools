@@ -1,4 +1,4 @@
-##Centricity Annotation API
+# Annotation API
 
 #Setting Up:
 
