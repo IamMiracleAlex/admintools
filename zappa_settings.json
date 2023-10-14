@@ -1,0 +1,75 @@
+{
+  "dev": {
+    "django_settings": "config.settings",
+    "project_name": "new-annotation-apis",
+    "memory_size": 5120,
+    "runtime": "python3.6",
+    "s3_bucket": "test-django-apis",
+    "aws_region": "us-east-1",
+    "role_name": "admin-api-dev-us-east-1-lambdaRole",
+    "role_arn": "arn:aws:iam::066954119569:role/admin-api-dev-us-east-1-lambdaRole",
+    "keep_warm": false,
+    "timeout_seconds": 180,
+    "num_retained_versions":50,
+    "exclude": ["*.sqlite3", "static", "node_modules", "package-lock.json", "fixtures","tests","*.md", "boto3*","botocore*"],
+    "lambda_description": "Centricity admin tool (Live!)",
+    "log_level": "ERROR",
+    "cloudwatch_log_level": "ERROR",
+    "events": [
+      {
+        "function": "schedules.update_labelled_urls",
+        "expression": "rate(1 day)"
+      },
+      {
+        "function": "schedules.events_and_unique_urls_status",
+        "expression": "rate(1 day)"
+      },
+      {
+        "function": "schedules.rds_internet_archive",
+        "expression": "rate(15 minutes)"
+      },
+      {
+        "function": "schedules.delete_node_permanently",
+        "expression": "rate(1 day)"
+      },
+      {
+        "function": "schedules.clear_old_logs",
+        "expression": "rate(1 day)"
+      },
+      {
+      "function": "extract_ce_version.process",
+            "event_source": {
+                  "arn":  "arn:aws:s3:::centricity-chrome-extension",
+                  "events": [
+                    "s3:ObjectCreated:*"
+                  ]
+               }
+      }
+    ]
+  },
+  
+  "staging": {
+    "django_settings": "config.settings",
+    "project_name": "new-annotation-apis",
+    "memory_size": 2048,
+    "runtime": "python3.6",
+    "s3_bucket": "admintool-staging",
+    "aws_region": "us-east-1",
+    "role_name": "admin-api-dev-us-east-1-lambdaRole",
+    "role_arn": "arn:aws:iam::066954119569:role/admin-api-dev-us-east-1-lambdaRole",
+    "keep_warm": false,
+    "exclude": ["*.sqlite3", "static", "node_modules", "package-lock.json", "fixtures","tests","*.md", "boto3*","botocore*"],
+    "lambda_description": "Centricity admin tool staging",
+    "events": [
+      {
+      "function": "extract_ce_version.process",
+            "event_source": {
+                  "arn":  "arn:aws:s3:::chrome-extension-staging",
+                  "events": [
+                    "s3:ObjectCreated:*"
+                  ]
+               }
+      }
+    ]
+    }
+}    

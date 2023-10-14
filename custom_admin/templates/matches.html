@@ -1,0 +1,85 @@
+ 
+<div id="matches_table" class="container row-container py-3">
+
+{% if intent_data %}
+
+    <div class="row match-height">
+        <div class="col-xl-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title"> Found {{total_count}} result{{ total_count|pluralize }} </h4>
+                </div>
+                <div class="card-content">
+                    <div style="max-height: 100vh; overflow-y: auto;" class="table-responsive p-1">
+                        <div class="tab-content" >
+                            <div class="panel-body">
+                                <table id="datatable" class="datatable table table-striped" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>Url</th>
+                                            <th>Department</th>
+                                            <th>Category</th>
+                                            <th>SubCategory</th>
+                                            <th>Subset</th>										
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for intent in intent_data %}
+                                        <tr>
+                                            <td class="text-truncate">{{ intent.url }}</td>
+                                            <td> {{ intent.department }} </td>
+                                            <td>{{ intent.category }} </td>
+                                            <td>{{ intent.subcategory }}</td>
+                                            <td>{{ intent.subset }} </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-header">
+                <h4 class="card-title"> Showing {{ display_count }} of {{total_count}} result{{ total_count|pluralize }} </h4>
+            </div>            
+        </div>
+    </div>
+
+        <div class="save py-3">
+            <button id="save" onclick="save()" class="btn-primary" >Save</button>
+        </div>
+    </div>
+
+    {% else %}
+
+    
+     <div class="from">
+         <br> 
+        <div class="title">
+            <h4>File Bulk Edit</h4>
+        </div>
+
+        <form id="upload_form" enctype="multipart/form-data" method="post" action="{% url 'bulk_edit' %}">
+            {% csrf_token %}
+        <div class="row">
+
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label for="current">CSV File*</label>
+                    <input type="file" class="form-control-file" accept=".csv" name="file" required>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <p>Accepts only csv files </p>
+    <div class="confirm">
+        <button type="submit" id="upload" class="btn-primary"> Upload</button>
+    </div>
+    </form>
+
+    {% endif %}
+
+</div>

@@ -1,0 +1,11 @@
+{% extends "admin/change_list.html" %} {% load static%} {% block content %}
+
+<script> sessionStorage.setItem('user_token', '{{user_token}}') </script>
+
+
+<link href="{% static '/css/status.css' %}" rel="stylesheet">
+
+<div class="table-container grid-container" id="tableId"></div>
+<script src="{% static '/js/statuspage.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+.custom-search-container {
+    position: relative;
+    min-width: 16rem;
+}
+
+.custom-search-container svg {
+    position: absolute;
+    top: 10px;
+    right: 13px;
+}
+
+.custom-search-container .custom-search-field {
+    border-color: #c7cadd;
+    border-radius: 20px;
+    padding: 1.15rem 2.4rem 1.15rem 1.23rem;
+    font-size: 0.875rem;
+}
+
+.custom-search-container .custom-search-field::placeholder {
+    color: #999db7;
+}

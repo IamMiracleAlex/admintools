@@ -1,0 +1,16 @@
+.node-history-badge {
+    border-radius: 6px;
+    padding: 10px;
+}
+
+.history-badge-deleted {
+    background-color: #ffede3;
+}
+
+.history-badge-created {
+    background-color: #f1f9f9;
+}
+
+.history-badge-changed {
+    background-color: #d0ffc9;
+}

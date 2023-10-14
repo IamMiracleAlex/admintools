@@ -1,0 +1,131 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block extrastyle %}{{ block.super }}
+<!--Bootstrap-->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{% endblock %}
+
+{% block content %}
+
+<div id="annotations">
+    <div class="container">
+        <form id="form" method="post" action="{% url 'bulk_edit' %}" data-extra-url="{% url 'load_extra_data' %}" novalidate>
+            {% csrf_token %}
+
+            {{ form.non_field_errors }}
+
+            {{ form.source.errors }}
+            {{ form.source }}
+
+            <div class="title">
+                <h4>Bulk Edit</h4>
+                <p>Visit <a href="https://centricityinsights.atlassian.net/wiki/spaces/TA/pages/1103298569/Bulk+Edit+Annotation+Intent+Data">this</a> wiki for more information on how to use this tool</p>
+            </div>
+            <br>
+
+            <div class="from">
+                <div class="title">
+                    <h5>From</h5>
+                </div>
+                <div class="row from">
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            {{ form.from_department.errors }}
+                            {{ form.from_department|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            {{ form.from_category.errors }}
+                            {{ form.from_category|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            {{ form.from_subcategory.errors }}
+                            {{ form.from_subcategory |as_crispy_field}}
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            {{ form.from_subset.errors }}
+                            {{ form.from_subset |as_crispy_field}}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="to py-3">
+                <div class="title">
+                    <h5>To</h5>
+                </div>
+                <div class="row to">
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            {{ form.to_department.errors }}
+                            {{ form.to_department |as_crispy_field}}
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            {{ form.to_category.errors }}
+                            {{ form.to_category |as_crispy_field}}
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            {{ form.to_subcategory.errors }}
+                            {{ form.to_subcategory |as_crispy_field}}
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            {{ form.to_subset.errors }}
+                            {{ form.to_subset | as_crispy_field}}
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            {{ form.facet.errors }}
+                            {{ form.facet | as_crispy_field}}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="confirm">
+                <button id="fetch_matches" class="btn-primary" >Find Matches</button>
+            </div>
+        </form>
+    </div>
+</div>  
+ {% include 'matches.html' %}
+
+
+{% endblock content %}
+
+{% block extrajs %}
+<script src="{% static 'custom_admin/js/bulk_edit.js' %}"></script>
+
+<script>
+    function save() { 
+        var form_data = $("#form");
+        $("#save").text("Loading...")
+        form_data.submit()
+        };
+</script>
+
+<script>
+$("#upload_form").on("submit", function(e) { 
+
+    $("#upload").text("Updating...")
+    });
+</script>
+
+{% endblock extrajs %}
+
+

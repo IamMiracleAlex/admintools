@@ -1,0 +1,66 @@
+{% extends "admin/base.html" %}
+{% load static%}
+{% block content %}
+<script>
+    sessionStorage.setItem('all_urls_session', '{{token}}')
+    sessionStorage.setItem('user_token', '{{user_token}}')
+    localStorage.setItem('BASE_URL', '{{base_url}}')
+    sessionStorage.setItem('user_token', '{{user_token}}')
+</script>
+
+
+<div id="root" style="width: 100%;"></div>
+{% if debug %}
+<!-- 
+        DEVELOPMENT ONLY 
+        - Requires running vite's dev server - npm run dev 
+        - Necessary scripts for HMR
+        - Latest of our react app loaded through vite dev server
+    -->
+<script type="module">
+    import RefreshRuntime from "http://localhost:3000/@react-refresh";
+    RefreshRuntime.injectIntoGlobalHook(window);
+    window.$RefreshReg$ = () => { };
+    window.$RefreshSig$ = () => (type) => type;
+    window.__vite_plugin_react_preamble_installed__ = true;
+</script>
+<script type="module" src="http://localhost:3000/@vite/client"></script>
+<script type="module" src="http://localhost:3000/{{react_app}}"></script>
+{% else %}
+<!-- 
+        BUILD ONLY 
+        - Fetch's manifest.json file produced by Vite.  
+        - Checks if there is a key that matches the provided value in {{react_app}}.
+        - Loads files listed in manifest.json necessary to make this react_app work. 
+    -->
+<script>
+    const react_app_file_path = "{{react_app}}"
+    let static_path = "{% static ''%}"
+    if (static_path.endsWith(".")) {
+        static_path = static_path.slice(0, -1)
+    }
+    fetch("{% static '/manifest.json' %}")
+        .then((response) => response.json())
+        .then((data) => {
+            if (!data || !data[react_app_file_path]) {
+                console.log(`No manifest, or react app ${react_app_file_path} doesnt exist in manifest.`)
+            }
+            const file_to_append = data[react_app_file_path]["file"];
+            const path_to_file_to_append = static_path + file_to_append;
+            const new_script = document.createElement("script");
+            new_script.type = "module";
+            new_script.src = path_to_file_to_append;
+            document.body.appendChild(new_script);
+
+            const css_files = data[react_app_file_path]["css"].forEach((value, key) => {
+                const css = document.createElement("link");
+                css.href = static_path + value;
+                css.rel = "stylesheet"
+                document.body.append(css);
+            });
+        })
+        .catch(console.error)
+</script>
+{% endif %}
+
+{% endblock %}

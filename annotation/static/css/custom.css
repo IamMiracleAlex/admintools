@@ -1,0 +1,109 @@
+/* Patch for jazzmin radio button */
+
+
+form ul.radiolist li {
+    list-style-type: none;
+}
+
+form ul.radiolist label {
+    float: none;
+    display: inline;
+}
+
+form ul.radiolist input[type="radio"] {
+    margin: -2px 4px 0 0;
+    padding: 0;
+}
+
+form ul.inline {
+    margin-left: 0;
+    padding: 0;
+}
+
+form ul.inline li {
+    float: left;
+    padding-right: 7px;
+}
+
+
+td.field-full_url {
+    max-width: 400px;
+    word-wrap:break-word;
+}
+
+td.field-url {
+    max-width: 400px;
+    word-wrap:break-word;
+}
+
+form ul.radiolist input[type="radio"] {
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: 0;
+    background: lightgray;
+    height: 30px;
+    width: 30px;
+    border: 1px solid white;
+  }
+  
+  form ul.radiolist input:checked {
+    background: #aaaaaa;
+  }
+  
+  form ul.radiolist input:hover {
+    filter: brightness(90%);
+  }
+  
+  form ul.radiolist input:disabled {
+    background: #e6e6e6;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  
+  form ul.radiolist input:after {
+    content: '';
+    position: relative;
+    left: 40%;
+    top: 20%;
+    width: 15%;
+    height: 40%;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    display: none;
+  }
+  
+  form ul.radiolist input:checked:after {
+    display: block;
+  }
+  
+  form ul.radiolist input:disabled:after {
+    border-color: #7b7b7b;
+  }
+
+  a.brand-link {
+    display: flex !important;
+  }
+
+  .brand-link .brand-image {
+    border-radius: 0;
+    box-shadow: 0 0 black !important;
+    opacity: 1 !important;
+    width: 90% !important;
+  }
+
+  .brand-link .brand-text {
+    display: none;
+  }
+
+.alert-dismissible{
+  background-color: lightblue;
+  color: #371ea5;
+}
+
+.alert-dismissible a{
+  color:darkmagenta !important;
+  font-weight: bold !important;
+}

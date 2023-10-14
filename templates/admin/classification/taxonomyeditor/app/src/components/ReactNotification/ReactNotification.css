@@ -1,0 +1,32 @@
+.custom-notification-container .notification-container-top-left {
+    left: 0px;
+    top: 0px;
+}
+
+.custom-notification-text-container {
+    padding: 1rem 1.5rem;
+}
+
+.custom-notification-success {
+    background-color: #27ae60;
+    color: #fff;
+}
+
+.custom-notification-text-container > p {
+    margin: 0;
+    font-size: 0.875rem;
+}
+
+.custom-notification-text-container > p > span {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-left: 22px;
+}
+
+.custom-notification-text-container span:hover {
+    color: #fff;
+}
+
+.custom-notification-container .notification-item {
+    box-shadow: none;
+}

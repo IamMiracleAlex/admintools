@@ -1,0 +1,89 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block extrastyle %}{{ block.super }}
+<!--Bootstrap-->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{% endblock %}
+
+{% block content %}
+
+<div id="annotations">
+    <div class="container">
+        <form id="form" method="post" action="{% url 'facet_bulk_edit' %}" novalidate>
+            {% csrf_token %}
+
+            {{ form.non_field_errors }}
+
+            {{ form.source.errors }}
+            {{ form.source }}
+
+            <div class="title">
+                <h4>Facet Bulk Edit</h4>
+                <p>Visit <a href="https://centricityinsights.atlassian.net/wiki/spaces/TA/pages/1103298569/Bulk+Edit+Annotation+Intent+Data">this</a> wiki for more information on how to use this tool</p>
+            </div>
+            <br>
+
+            <div class="from">
+                <div class="title">
+                    <h5>From</h5>
+                </div>
+                <div class="row from">
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            {{ form.from_facet.errors }}
+                            {{ form.from_facet|as_crispy_field }}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="to py-3">
+                <div class="title">
+                    <h5>To</h5>
+                </div>
+                <div class="row to">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            {{ form.to_facet.errors }}
+                            {{ form.to_facet |as_crispy_field}}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="confirm">
+                <button id="fetch_matches" class="btn-primary" >Find Matches</button>
+            </div>
+        </form>
+    </div>
+</div>  
+ {% include 'facet_matches.html' %}
+
+
+{% endblock content %}
+
+{% block extrajs %}
+<script src="{% static 'custom_admin/js/bulk_edit.js' %}"></script>
+
+<script>
+    function save() { 
+        var form_data = $("#form");
+        $("#save").text("Loading...")
+        form_data.submit()
+        };
+</script>
+
+<script>
+$("#upload_form").on("submit", function(e) { 
+
+    $("#upload").text("Updating...")
+    });
+</script>
+
+{% endblock extrajs %}
+
+

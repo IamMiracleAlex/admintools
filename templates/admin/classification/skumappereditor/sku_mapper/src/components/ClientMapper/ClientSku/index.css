@@ -1,0 +1,7 @@
+.btn-rad {
+    border-radius: 20px !important;
+    padding: 5px 1.5em;
+}
+.btn-wide {
+    min-width: 10em !important;
+}

@@ -1,0 +1,54 @@
+ 
+<div id="matches_table" class="container row-container py-3">
+
+{% if facet_data %}
+
+    <div class="row match-height">
+        <div class="col-xl-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title"> Found {{total_count}} result{{ total_count|pluralize }} </h4>
+                </div>
+                <div class="card-content">
+                    <div style="max-height: 100vh; overflow-y: auto;" class="table-responsive p-1">
+                        <div class="tab-content" >
+                            <div class="panel-body">
+                                <table id="datatable" class="datatable table table-striped" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>Entity</th>
+                                            <th>Facet</th>
+                                            <th>Facet Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for facet in facet_data %}
+                                        <tr>
+                                            <td class="text-truncate">{{ facet.entity }}</td>
+                                            <td> {{ facet.facet }} </td>
+                                            <td>{{ facet.facet_type }} </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-header">
+                <h4 class="card-title"> Showing {{ display_count }} of {{total_count}} result{{ total_count|pluralize }} </h4>
+            </div>            
+        </div>
+    </div>
+
+        <div class="save py-3">
+            <button id="save" onclick="save()" class="btn-primary" >Save</button>
+        </div>
+    </div>
+
+
+    {% endif %}
+
+</div>

@@ -1,0 +1,23 @@
+{% extends "admin/change_list.html" %}
+{% load static%}
+
+{% block content %}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<main class="container">
+    <iframe id="attempted-archive" title="Attempted Archives" width="1000" height="1200">
+    </iframe>
+</main>
+
+<script>
+    const attemptedArchiveIframe = document.querySelector('#attempted-archive')
+    const baseUrl = '{{base_url}}'
+    const newBaseUrl = baseUrl.slice(0, -1)
+
+    const lookerSrc = `https://centricity.cloud.looker.com/embed/looks/139?embed_domain=${newBaseUrl}`
+    attemptedArchiveIframe.setAttribute('src', lookerSrc)
+</script>
+
+{% endblock %}

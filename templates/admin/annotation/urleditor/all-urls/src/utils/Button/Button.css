@@ -1,0 +1,50 @@
+.btn {
+    border-radius: 0.625rem !important;
+}
+
+.btn.custom-btn-primary {
+    background-color: #3384ff;
+    color: #ffffff;
+    padding: 0.5rem 1.5rem;
+}
+
+.btn.rounded-border {
+    border-radius: 100px !important;
+    width: 170px;
+}
+
+.btn.custom-btn-primary:hover {
+    background-color: #1d6feb;
+    color: #ffffff;
+}
+
+.btn.custom-btn-primary-outline {
+    background-color: #ffffff;
+    border: 1px solid #3384ff;
+    color: #3384ff;
+}
+
+.btn.custom-btn-primary-outline:hover {
+    background-color: #3384ff;
+    border: 1px solid #3384ff;
+    color: #ffffff;
+}
+
+.btn.filter-btn {
+    background-color: rgba(199, 202, 221, 0.2);
+    border: 2px solid #c7cadd;
+    padding: 0.5rem 1.5rem;
+    margin-left: 1rem;
+}
+
+.btn.filter-btn svg {
+    margin-right: 10px;
+}
+
+.btn.w-160 {
+    width: 160px;
+}
+
+.btn.w-110 {
+    width: 110px;
+}

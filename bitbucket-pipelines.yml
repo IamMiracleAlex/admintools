@@ -1,0 +1,105 @@
+# Check our guides at https://confluence.atlassian.com/x/14UWN for more examples.
+# Only use spaces to indent your .yml configuration.
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: centricity/bitbucket_pipeline:0.0.9
+
+options:    
+  docker: true
+  size: 2x
+  
+definitions:
+  services:
+    docker:
+      memory: 4096
+
+pipelines:
+  default:
+    - step:
+        name: 'Build and Test'
+        caches:
+          - node
+          - pip
+        deployment: test
+        script:
+          - bash deploy-build.sh
+  branches:
+    dev:
+      - step:
+          size: 2x
+          name: 'deployment to dev'
+          services:
+            - docker # Enable Docker for your repository
+          script:
+            - bash deploy-dev.sh
+      - step:
+          name: Deploy to ECS
+          script:
+            - pipe: atlassian/aws-ecs-deploy:1.5.0
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_DEV_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_DEV_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: 'us-east-1'
+                CLUSTER_NAME: $ECS_DEV_CLUSTER
+                SERVICE_NAME: $ECS_DEV_SERVICE
+                FORCE_NEW_DEPLOYMENT: 'true'
+
+    staging:
+      - step:
+          size: 2x
+          name: 'deployment to staging'
+          services:
+            - docker # Enable Docker for your repository
+          script:
+            - bash deploy-stage.sh
+      - step:
+          name: Deploy Django to Staging ECS
+          script:
+            - pipe: atlassian/aws-ecs-deploy:1.5.0
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_STAGING_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_STAGING_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: 'us-east-1'
+                CLUSTER_NAME: 'admin-tool-staging-cluster'
+                SERVICE_NAME: 'ecs-admin-tool-staging-service'
+                FORCE_NEW_DEPLOYMENT: 'true'
+
+    prod:
+       - step:
+          size: 2x
+          name: Build and publish the django image to ECR.
+          services:
+            - docker # Enable Docker for your repository
+          script:
+            - bash deploy-prod.sh
+       - step:
+          name: Deploy Django to ECS
+          script:
+            - pipe: atlassian/aws-ecs-deploy:1.5.0
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: 'us-east-1'
+                CLUSTER_NAME: $ECS_ALPHA_CLUSTER
+                SERVICE_NAME: 'admintools-prod'
+                FORCE_NEW_DEPLOYMENT: 'true'
+
+      #  - step:
+      #     name: Build and publish celery image to ECR
+      #     services:
+      #       - docker # Enable Docker for your repository
+      #     script:
+      #       - bash deploy-celery.sh
+      #  - step:
+      #     name: Deploy to Celery to ECS
+      #     script:
+      #       - pipe: atlassian/aws-ecs-deploy:1.5.0
+      #         variables:
+      #           AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+      #           AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+      #           AWS_DEFAULT_REGION: 'us-east-1'
+      #           CLUSTER_NAME: $ECS_ALPHA_CLUSTER
+      #           SERVICE_NAME: 'celery'
+      #           FORCE_NEW_DEPLOYMENT: 'true'
+
+        
+

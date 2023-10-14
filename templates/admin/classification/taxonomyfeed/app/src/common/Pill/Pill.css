@@ -1,0 +1,53 @@
+.status-circle {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.status-circle.changed {
+    background-color: #149000;
+}
+
+.status-circle.deleted {
+    background-color: #f59c65;
+}
+
+.status-circle.added {
+    background-color: #11b8a4;
+}
+
+.centricity-main .badge {
+    height: 20px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+}
+
+.badge-Changed {
+    background: #d0ffc9;
+    color: #149000;
+}
+
+.badge-Created {
+    background: #f1f9f9;
+    color: #00685c;
+}
+
+.badge-Deleted {
+    background: #ffede3;
+    color: #ed5a00;
+}
+
+.circle-Changed {
+    background-color: #149000;
+}
+
+.circle-Deleted {
+    background-color: #f59c65;
+}
+
+.circle-Created {
+    background-color: #11b8a4;
+}

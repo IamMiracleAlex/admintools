@@ -1,0 +1,95 @@
+{% extends "admin/base_site.html" %}
+
+{% load static %}
+
+{% block extrastyle %}{{ block.super }}
+<!--Bootstrap-->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'custom_admin/css/data-release.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div>
+    <h1><strong> Data Release </strong></h1>
+    <p>Click the "Run Now" button to move data from Alpha to Prod</p>
+</div>
+<table id="table" class="table" style="display: none;">
+    <thead class="thead-light">
+      <tr>
+        <!-- <th scope="col">Current Rows in Alpha</th>
+        <th scope="col">Current Rows in Prod</th> -->
+        <th scope="col">Last Run</th>
+        <th scope="col">Result</th>
+        <th scope="col">Run</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <!-- <td id="alpha"></td>
+          <td id="prod"></td> -->
+          <td id="last_run"></td>
+          <td id="result"></td>
+          <td id="runNow"><button class="btn btn-primary btn-sm" type="button" onclick="triggerRelease()">Run now </button></td>
+          <td id="runner" style="display: none;"><button class="btn btn-primary btn-sm" type="button" disabled>
+            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+            Running...
+          </button></td>
+        </tr>
+      </tbody>
+  </table>
+  <div class="d-flex align-items-center justify-content-center mt-5" style="position: absolute; left: 0; right: 0;">
+    <div id="spinner" class="spinner-grow text-primary mt-5" style="width: 5rem; height: 5rem;;" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block extrajs %}
+<script src="{% static 'custom_admin/js/data_release.js' %}"></script>
+
+<script>
+    window.onload = function () {getRowData()}
+
+    function getRowData() {
+        let url = "{% url 'row_data' %}"
+        $.ajax({
+            url: url,
+            success: function (data) {
+                // document.getElementById("alpha").innerHTML = data.alpha
+                // document.getElementById("prod").innerHTML = data.prod;
+                document.getElementById("last_run").innerHTML = data.last_run || "Never";
+                document.getElementById("result").innerHTML = data.result || "Not available";
+                showPage()
+            }
+    })
+    }
+
+    function triggerRelease() {
+        document.getElementById("runNow").style.display = "none";
+        document.getElementById("runner").style.display = null;
+
+        let url = "{% url 'data_release' %}"
+
+        $.ajax({
+            url: url,
+            success: function(data) {
+                // document.getElementById("prod").innerHTML = data.prod;
+                document.getElementById("last_run").innerHTML = data.last_run;
+                document.getElementById("result").innerHTML = data.result;
+
+                document.getElementById("runNow").style.display = null;
+                document.getElementById("runner").style.display = "none";
+
+            }
+        })
+    }
+
+    function showPage() {
+        document.getElementById("table").style.display = "table";
+        document.getElementById("spinner").style.display = "none";
+    }
+</script>
+{% endblock extrajs %}

@@ -1,0 +1,84 @@
+{% extends "admin/change_list.html" %}
+{% load static%}
+
+{% block content %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<main class="container-fluid">
+    <form>
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" class="form-control" placeholder="A/B Test Title">
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <textarea class="form-control" rows="5"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Requirement Document Link</label>
+            <input type="url" class="form-control" placeholder="https://www.google.com">
+        </div>
+        <div class="form-group">
+            <label>Beta Version Link</label>
+            <input type="url" class="form-control" placeholder="https://www.google.com">
+        </div>
+        <div class="form-group">
+            <label>Comparison Standard</label>
+            <select class="form-control">
+                <option>Single User</option>
+                <option>All Users</option>
+                <option>Both</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>URL Types</label>
+            <select class="form-control">
+                <option>Annotated URLs</option>
+                <option>TBAQs</option>
+                <option>Both</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Metrics to test with</label>
+            <select class="form-control">
+                <option>Metrics 1</option>
+                <option>Metrics 2</option>
+                <option>Metrics 3</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect2">Select Annotators for Test</label>
+            <select multiple class="form-control">
+                {%for user in users %}
+                <option value={{user.id}}>{{user.email}}</option>
+                {%endfor%}
+            </select>
+        </div>
+        <div class="form-group d-flex">
+            <div class="mr-4">
+                <label for="exampleFormControlSelect2">Test period</label>
+
+                <input type="date" class="form-control" name="trip-start">
+            </div>
+            <div>
+                <label for="exampleFormControlSelect2">To</label>
+
+                <input type="date" class="form-control" name="trip-start">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Instruction for Users</label>
+            <textarea class="form-control" rows="5"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Feedback Form</label>
+            <textarea class="form-control" rows="5"></textarea>
+        </div>
+        <button class="btn btn-primary">Start Test</button>
+
+    </form>
+</main>
+
+
+{% endblock %}
