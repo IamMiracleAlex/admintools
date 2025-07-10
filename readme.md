@@ -158,5 +158,3 @@ This is because there are audit tables that depend on these models.
 
 To change, add or remove a field from a protected model, you'll have to update the audit table and audit function attached to such model.
 
-Please see the wiki below for more information:
-https://centricityinsights.atlassian.net/wiki/spaces/TA/pages/1473839255/Audit+Tables 
